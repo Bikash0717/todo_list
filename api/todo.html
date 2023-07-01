@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Todo</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+
+<body>
+    
+                <form action="{{ url_for('add') }}" method="post">
+                    <label for="todo">Add Items</label>
+                    <input type="text" name="item" value="" required />
+                    <input type="submit" name="submit" value="Submit" />
+                  </form>
+
+
+                  <h2>Todos</h2>
+    {% if todos%}
+    <ul>
+      {% for todo in todos %}
+      <div>
+        <li>{{ todo['task'] }}</li>
+      </div>
+      <div>
+        <form action="/{{todo['id']}}/delete" method="post">
+          <input type="submit" name="delete" value="Delete" />
+        </form>
+      </div>
+      {% endfor %}
+    </ul>
+    {% endif %}
+            </div>
+ 
+</body>
+
+</html>
