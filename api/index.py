@@ -1,11 +1,27 @@
-from flask import Flask
+from flask import Flask,render_template,redirect,request,url_for
+import time
+app=Flask(__name__,template_folder="./")
 
-app = Flask(__name__)
-
-@app.route('/')
+todos_list=[]
+@app.route("/")
 def home():
-    return 'Hello, World!'
+    return render_template("index.html", todos=todos_list)
+    
+@app.route('/<int:id>/delete', methods=['POST'])
+def delete(id):
+    #id = int(id)
+    for i in range(len(todos_list)):
+        if todos_list[i]['id'] == id:
+            todos_list.pop(i)
+            break
+    return redirect(url_for('home'))
 
-@app.route('/about')
-def about():
-    return 'About'
+@app.route('/add', methods=['POST'])
+def add():
+    task = request.form['item']
+    if len(task) > 0:
+        id = int(time.time()*1000)
+        todos_list.append({'id': id, 'task': task})
+        print(todos_list)
+    return redirect(url_for('home'))
+
