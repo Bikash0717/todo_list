@@ -5,7 +5,7 @@ app=Flask(__name__,template_folder="./")
 todos_list=[]
 @app.route("/")
 def home():
-    return render_template("index.html", todos=todos_list)
+    return render_template("todo.html", todos=todos_list)
     
 @app.route('/<int:id>/delete', methods=['POST'])
 def delete(id):
